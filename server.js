@@ -28,12 +28,16 @@ try {
 
 // Middleware for parsing JSON
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
+const headerFooterRoutes = require('./routes/headerFooterRoutes');
 
 // Use routes
 app.use('/api/auth', authRoutes);
+app.use('/api/header-footer', headerFooterRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
