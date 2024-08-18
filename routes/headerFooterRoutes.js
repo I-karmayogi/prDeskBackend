@@ -1,17 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const cloudinary = require('cloudinary').v2;
 const HeaderFooter = require('../models/headerFooterModel.js');
 const upload = require('../middlewares/upload');
 const { protect } = require('../middlewares/authMiddleware');
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
-router.post('/upload', protect, upload.array(`headerImage`, 1), async (req, res) => {
+
+
+// auth middleware removed for testing
+router.post('/upload', upload.array(`image`, 2), async (req, res) => {
     try {
         // Check if files are uploaded
         // if (!req.files || !req.files.headerImage) {
@@ -22,19 +19,26 @@ router.post('/upload', protect, upload.array(`headerImage`, 1), async (req, res)
         // }
         console.log(req);
 
-        const {name} =  req.body;
+        const { name } = req.body;
 
         const headerFooterTemplate = new HeaderFooter({
             name: name,
         })
 
         console.log(req.files);
-        headerFooterTemplate.headerImage = req.files[0];
+        headerFooterTemplate.headerImage.filename = req.files[0].filename;
+        headerFooterTemplate.headerImage.url = req.files[0].path;
+        headerFooterTemplate.footerImage.filename = req.files[1].filename;
+        headerFooterTemplate.footerImage.url = req.files[1].path;
         await headerFooterTemplate.save();
 
-        console.log('1');
+        res.status(201).json({
+            success: true,
+            message: 'Images uploaded successfully',
+            data: headerFooterTemplate,
+        });
 
-        
+
     } catch (error) {
         res.status(500).json({
             success: false,
