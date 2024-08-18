@@ -1,0 +1,20 @@
+{
+  "name": "politicaldesk-backend",
+  "version": "1.0.0",
+  "description": "backend for politicaldesk",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/I-karmayogi/prDeskBackend.git"
+  },
+  "author": "Divyansh Gupta and Raghvan Pareek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/I-karmayogi/prDeskBackend/issues"
+  },
+  "homepage": "https://github.com/I-karmayogi/prDeskBackend#readme"
+}
